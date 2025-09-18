@@ -25,5 +25,5 @@ Each workflow is:
 
 1. Clone this repo:  
    ```bash
-   git clone https://github.com/your-username/n8n.git
+   git clone https://github.com/dhanu6799/n8n.git
    cd n8n
