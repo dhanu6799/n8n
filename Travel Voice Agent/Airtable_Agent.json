@@ -1,0 +1,1116 @@
+{
+  "name": "Airtable Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool to generate a new idea.\n\n\n\n\n\n\n\n",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblV7yO7FRkHmZ7US",
+          "mode": "list",
+          "cachedResultName": "Ideas",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tblV7yO7FRkHmZ7US"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $fromAI('name') }}",
+            "Type": "={{ $fromAI('type') }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Content",
+                  "value": "Content"
+                },
+                {
+                  "name": "App",
+                  "value": "App"
+                },
+                {
+                  "name": "Workflow",
+                  "value": "Workflow"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1000,
+        1760
+      ],
+      "id": "e2acc820-9f54-45da-867f-7246c9730e2f",
+      "name": "New Idea",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to create a new task.",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbloKBkWuH6FmmjhI",
+          "mode": "list",
+          "cachedResultName": "Tasks",
+          "cachedResultUrl": "https://airtable.com/appt81JoiPabR4HPM/tbloKBkWuH6FmmjhI"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $fromAI('task') }}",
+            "Status": "={{ $fromAI('status') }}",
+            "Type": "={{ $fromAI('type') }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Todo",
+                  "value": "Todo"
+                },
+                {
+                  "name": "Complete",
+                  "value": "Complete"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Work",
+                  "value": "Work"
+                },
+                {
+                  "name": "Personal",
+                  "value": "Personal"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        420,
+        1620
+      ],
+      "id": "ede31a22-020c-46de-9349-b720657b44b9",
+      "name": "New Task",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Emily Airtable Agent"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool to retrieve ideas.\n",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblV7yO7FRkHmZ7US",
+          "mode": "list",
+          "cachedResultName": "Ideas",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tblV7yO7FRkHmZ7US"
+        },
+        "id": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1140,
+        1760
+      ],
+      "id": "ddfc4247-baf5-4738-9a03-a2ecf66c6e1a",
+      "name": "Get Idea",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to fetch tasks",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbld51LDQgb5Fsln3",
+          "mode": "list",
+          "cachedResultName": "Tasks",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tbld51LDQgb5Fsln3"
+        },
+        "id": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        540,
+        1660
+      ],
+      "id": "cdaa9876-d09a-41e0-b045-83bbfcffd459",
+      "name": "Get Task",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to remove tasks",
+        "operation": "deleteRecord",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbld51LDQgb5Fsln3",
+          "mode": "list",
+          "cachedResultName": "Tasks",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tbld51LDQgb5Fsln3"
+        },
+        "id": "={{ $fromAI('record_id') }}"
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        1700
+      ],
+      "id": "46b9ba08-3c8c-49f3-8e7d-e61ccb1aa076",
+      "name": "Delete Task",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to delete ideas.",
+        "operation": "deleteRecord",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblV7yO7FRkHmZ7US",
+          "mode": "list",
+          "cachedResultName": "Ideas",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tblV7yO7FRkHmZ7US"
+        },
+        "id": "={{ $fromAI('record_id') }}"
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1260,
+        1760
+      ],
+      "id": "84d29324-c796-43ea-8a91-548d0666be1c",
+      "name": "Delete Idea",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to update existing tasks ",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbld51LDQgb5Fsln3",
+          "mode": "list",
+          "cachedResultName": "Tasks",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tbld51LDQgb5Fsln3"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $fromAI('id__using_to_match_', ``, 'string') }}",
+            "Name": "={{ $fromAI('Name', ``, 'string') }}",
+            "Status": "={{ $fromAI('status') }}",
+            "Type": "={{ $fromAI('type') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Todo",
+                  "value": "Todo"
+                },
+                {
+                  "name": "Complete",
+                  "value": "Complete"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Work",
+                  "value": "Work"
+                },
+                {
+                  "name": "Personal",
+                  "value": "Personal"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        860,
+        1720
+      ],
+      "id": "e41f8a28-0aff-4a39-b53b-78899ef3652c",
+      "name": "Update Tasks",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to update ideas.",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblV7yO7FRkHmZ7US",
+          "mode": "list",
+          "cachedResultName": "Ideas",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tblV7yO7FRkHmZ7US"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $fromAI('id_to_match_', ``, 'string') }}",
+            "Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Name', ``, 'string') }}",
+            "Type": "={{ $fromAI('type') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Content",
+                  "value": "Content"
+                },
+                {
+                  "name": "App",
+                  "value": "App"
+                },
+                {
+                  "name": "Workflow",
+                  "value": "Workflow"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        1760
+      ],
+      "id": "ee643ad4-3fb2-4722-b96e-2a3047c7b70c",
+      "name": "Update Idea",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "eaf23f66-e62b-433f-8256-c40d21a397ea",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        500,
+        1160
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d3490ace-2d62-492b-844f-62e9c564462b",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        400,
+        1340
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "GsKxETmhSwjWfMdU",
+          "name": "OpenAi account 5"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to create a new item",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl59JZ1p695Sz25U",
+          "mode": "list",
+          "cachedResultName": "Items",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tbl59JZ1p695Sz25U"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "URL": "= {{ $fromAI('URL') }}",
+            "Note": "= {{ $fromAI('note') }}"
+          },
+          "matchingColumns": [
+            "Record ID"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Note",
+              "displayName": "Note",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Video",
+                  "value": "Video"
+                },
+                {
+                  "name": "Link",
+                  "value": "Link"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        2080,
+        1220
+      ],
+      "id": "d7578079-f1bb-4930-9bdb-43fd0b40ed3e",
+      "name": "Save for Later",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to retrieve saved items.",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl59JZ1p695Sz25U",
+          "mode": "list",
+          "cachedResultName": "Items",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tbl59JZ1p695Sz25U"
+        },
+        "id": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1960,
+        1300
+      ],
+      "id": "b962c9ec-ed8c-42d9-a303-96db84f7a137",
+      "name": "Retrieve Saved Item",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to modify saved items.",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl59JZ1p695Sz25U",
+          "mode": "list",
+          "cachedResultName": "Items",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tbl59JZ1p695Sz25U"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $fromAI('id__using_to_match_', ``, 'string') }}",
+            "Note": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Note', ``, 'string') }}",
+            "URL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Note",
+              "displayName": "Note",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1840,
+        1420
+      ],
+      "id": "edaa86cb-c1f4-4805-a417-7aa5ae7841a8",
+      "name": "Modify Saved Item",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const rawOutput = $json[\"output\"];\nconst parsedOutput = JSON.parse(rawOutput);\nreturn parsedOutput;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        1240
+      ],
+      "id": "8929524b-44ab-4dee-8b6f-051363bd3067",
+      "name": "JSON"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this to remove saved items.",
+        "operation": "deleteRecord",
+        "base": {
+          "__rl": true,
+          "value": "appUAxtvPi5hpe8pk",
+          "mode": "list",
+          "cachedResultName": "Airtable Agent",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl59JZ1p695Sz25U",
+          "mode": "list",
+          "cachedResultName": "Items",
+          "cachedResultUrl": "https://airtable.com/appUAxtvPi5hpe8pk/tbl59JZ1p695Sz25U"
+        },
+        "id": "={{ $fromAI('record_id') }}"
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1740,
+        1540
+      ],
+      "id": "58f2eed8-f62d-4b73-b667-82076ac56378",
+      "name": "Remove Saved Item",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4xCcN8qMQvB3WECE",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "agent": "openAiFunctionsAgent",
+        "promptType": "define",
+        "text": "={{ $json.query }}",
+        "options": {
+          "systemMessage": "=#Role\nYou are a highly efficient data management assistant responsible for organizing and maintaining structured records in Airtable.\n\n##Objective\nYour primary function is to manage Tasks, Ideas, and Saved Items by creating, retrieving, updating, and deleting records based on user requests. You ensure all records are processed accurately and efficiently while maintaining clear communication.\n\n##Tools\n-New Task → Creates a new task entry\n-Get Task → Retrieves an existing task\n-Delete Task → Removes a task from the database\n-Update Task → Modifies an existing task\n-New Idea → Adds a new idea entry\n-Get Idea → Fetches an existing idea\n-Delete Idea → Deletes a specific idea from the records\n-Update Idea → Updates an existing idea based on new details\n-Save for Later → Stores an item for future reference\n-Retrieve Saved Item → Fetches a saved item\n-Modify Saved Item → Updates a saved item with new details\n-Remove Saved Item → Deletes a saved item from the database\n\n###Instructions\n\nCreating New Records\n-Generate a new record according to the user’s request\n-Provide a brief confirmation of the action taken upon completion\n\nRetrieving Records \n-Search for and fetch records based on the user’s request\n=Return the relevant data in a structured format\n\nUpdating Existing Records\n-Modify records as per the user’s instructions\n-Confirm the update by summarizing the changes made\n\nDeleting Records\n-Remove a specific record when requested\n-If instructed to delete all related records in a category, clear the corresponding data from the Airtable table\nConstraints\n\nIf no records exist, respond with:\n\n\"No tasks found.\"\n\"No ideas available.\"\n\"No saved items exist.\"\n\nAll outputs should be returned in raw JSON format"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        940,
+        1240
+      ],
+      "id": "224c0c9f-df70-4897-8b52-3c5a682aec76",
+      "name": "Airtable Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "New Idea": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Idea": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Idea": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Idea": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save for Later": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Saved Item": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modify Saved Item": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Saved Item": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Agent": {
+      "main": [
+        [
+          {
+            "node": "JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fcff2db7-a415-4e91-aaff-8272c571b0e2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d1853d6d92799d2de46a947c80ac9a5af91665397cc93a1b568769b332366e37"
+  },
+  "id": "aKXQ7aG7XV2MHBy1",
+  "tags": []
+}
