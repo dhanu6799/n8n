@@ -1,0 +1,590 @@
+{
+  "name": "Travel Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "travelplaner",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        256
+      ],
+      "id": "ec887ff9-ae5c-4e80-863f-073722cc57fd",
+      "name": "Webhook",
+      "webhookId": "33812a39-3bb4-44e8-b938-418b892a2ca0"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1168,
+        256
+      ],
+      "id": "a65a4b4a-45cf-44b7-83cf-4fcef6132af9",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f3db9625-a8d3-4070-ad64-b473325aaaa0",
+              "name": "origin",
+              "value": "={{ $json.body.origin }}",
+              "type": "string"
+            },
+            {
+              "id": "79470c36-466f-46cf-a81b-24fc414ee4dc",
+              "name": "destination",
+              "value": "={{ $json.body.destination }}",
+              "type": "string"
+            },
+            {
+              "id": "0bff69db-47a8-49a7-a729-415d41919b88",
+              "name": "departure_date",
+              "value": "={{ $json.body.departure_date }}",
+              "type": "string"
+            },
+            {
+              "id": "168c1208-9fd4-4ca3-8f85-5becd152ddfd",
+              "name": "return_date",
+              "value": "={{ $json.body.return_date }}",
+              "type": "string"
+            },
+            {
+              "id": "2c8c3a55-1f8d-4e1c-afd1-d7cc3887a55d",
+              "name": "travelers",
+              "value": "={{ $json.body.traveler }}",
+              "type": "number"
+            },
+            {
+              "id": "3146cc29-8d97-458b-ba50-4ddfd280890c",
+              "name": "activities",
+              "value": "={{ $json.body.activities }}",
+              "type": "string"
+            },
+            {
+              "id": "e720a5a4-7a2c-446a-a21c-052969da8a35",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -528,
+        256
+      ],
+      "id": "aa9b9baf-b2f5-4fdd-b88e-0158d1101ebf",
+      "name": "Set Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Origin: {{ $json.origin }}\nDestination: {{ $json.destination }}\nDeparture Date: {{ $json.departure_date }}\nReturn Date: {{ $json.return_date }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Turn the origin and destination into their airport codes.\n\nMake sure the departure and return dates are in the future, not the past.\n\nHere is the current date/time: {{ $now }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        -352,
+        256
+      ],
+      "id": "82729ae2-6a20-43aa-af18-ffdb9a2b1863",
+      "name": "Airport Codes & Dates"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        448
+      ],
+      "id": "9f643be4-5136-4170-9345-8a695fd509e6",
+      "name": "4o",
+      "credentials": {
+        "openAiApi": {
+          "id": "ErYw6GpGKUDpQCWa",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"origin\": {\n      \"type\": \"string\",\n      \"description\": \"The origin\"\n    },\n    \"destination\": {\n      \"type\": \"string\",\n      \"description\": \"The destination\"\n    },\n    \"departure\": {\n      \"type\": \"string\",\n      \"format\": \"date\",\n      \"description\": \"The departure date (YYYY-MM-DD)\"\n    },\n    \"return\": {\n      \"type\": \"string\",\n      \"format\": \"date\",\n      \"description\": \"The return date (YYYY-MM-DD)\"\n    }\n  },\n  \"required\": [\"origin\", \"destination\", \"departure\",\"return\"]\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -176,
+        448
+      ],
+      "id": "a9b6127f-10b8-43d5-8a85-885cee019c3a",
+      "name": "Locations & Dates"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# Flights from {{ $('Set Fields').item.json.origin }} to {{ $('Set Fields').item.json.destination }} on {{ $('Set Fields').item.json.departure_date }} to {{ $('Set Fields').item.json.return_date }}\n\n1) {{ $json.best_flights[0].flights[0].airline }}, {{ $json.best_flights[0].flights[0].departure_airport.time }}, {{ $json.best_flights[0].flights[0].duration }} minutes\n\nFeatures:\n{{ $json.best_flights[0].flights[0].extensions }}\n\nPrice: ${{ $json.best_flights[0].price }}, {{ $json.best_flights[0].type }}\n\n2) {{ $json.best_flights[1].flights[0].airline }}, {{ $json.best_flights[1].flights[0].departure_airport.time }}, {{ $json.best_flights[1].flights[0].duration }} minutes\n\nFeatures: \n{{ $json.best_flights[1].flights[0].extensions }}\n\nPrice: ${{ $json.best_flights[1].price }}, {{ $json.best_flights[1].type }}\n\n\n\n# Resorts\n\n1) {{ $('Resorts / Hotels').item.json.properties[0].name }}\nLink: {{ $('Resorts / Hotels').item.json.properties[0].link }}\n\nImage: {{ $('Resorts / Hotels').item.json.properties[0].images[0].original_image }}\n\nRate per night: {{ $('Resorts / Hotels').item.json.properties[0].rate_per_night.lowest }}\nTotal Rate: {{ $('Resorts / Hotels').item.json.properties[0].total_rate.lowest }}\n\nNearby Places: \n{{ $('Resorts / Hotels').item.json.properties[0].nearby_places[0].name }}, {{ $('Resorts / Hotels').item.json.properties[0].nearby_places[0].transportations[0].duration }} {{ $('Resorts / Hotels').item.json.properties[0].nearby_places[0].transportations[0].type }}\n{{ $('Resorts / Hotels').item.json.properties[0].nearby_places[1].name }},{{ $('Resorts / Hotels').item.json.properties[0].nearby_places[1].transportations[0].duration }} {{ $('Resorts / Hotels').item.json.properties[0].nearby_places[1].transportations[0].type }}\n\nAmentities: \n{{ $('Resorts / Hotels').item.json.properties[0].amenities }}\n\n2) {{ $('Resorts / Hotels').item.json.properties[1].name }}\nLink: {{ $('Resorts / Hotels').item.json.properties[1].link }}\n\nImage: {{ $('Resorts / Hotels').item.json.properties[1].images[0].original_image }}\n\nRate per night: {{ $('Resorts / Hotels').item.json.properties[1].rate_per_night.lowest }}\nTotal Rate: {{ $('Resorts / Hotels').item.json.properties[1].total_rate.lowest }}\n\nNearbly Places:\n{{ $('Resorts / Hotels').item.json.properties[1].nearby_places[0].name }}, {{ $('Resorts / Hotels').item.json.properties[1].nearby_places[0].transportations[0].duration }} {{ $('Resorts / Hotels').item.json.properties[1].nearby_places[0].transportations[0].type }}\n{{ $('Resorts / Hotels').item.json.properties[1].nearby_places[1].name }}, {{ $('Resorts / Hotels').item.json.properties[1].nearby_places[1].transportations[0].duration }} {{ $('Resorts / Hotels').item.json.properties[1].nearby_places[1].transportations[0].type }}\n\nAmenities:\n{{ $('Resorts / Hotels').item.json.properties[1].amenities }}\n\n3) {{ $('Resorts / Hotels').item.json.properties[2].name }}\nLink: {{ $('Resorts / Hotels').item.json.properties[2].link }}\n\nImage: {{ $('Resorts / Hotels').item.json.properties[2].images[1].original_image }}\n\nRate per night:{{ $('Resorts / Hotels').item.json.properties[2].rate_per_night.lowest }}\nTotal Rate: {{ $('Resorts / Hotels').item.json.properties[2].total_rate.lowest }}\n\nNearby Places: \n{{ $('Resorts / Hotels').item.json.properties[2].nearby_places[0].name }}, {{ $('Resorts / Hotels').item.json.properties[2].nearby_places[0].transportations[0].duration }} {{ $('Resorts / Hotels').item.json.properties[2].nearby_places[0].transportations[0].type }}\n{{ $('Resorts / Hotels').item.json.properties[2].nearby_places[1].name }}, {{ $('Resorts / Hotels').item.json.properties[2].nearby_places[1].transportations[0].duration }} {{ $('Resorts / Hotels').item.json.properties[2].nearby_places[1].transportations[0].type }}\n\nAmenities: \n{{ $('Resorts / Hotels').item.json.properties[2].amenities }}\n\n# Activities\n\n1) {{ $('Activity Itinerary').item.json.results[0].title }}\nLink: {{ $('Activity Itinerary').item.json.results[0].url }}\nDescription: {{ $('Activity Itinerary').item.json.results[0].content }}\n\n2) {{ $('Activity Itinerary').item.json.results[1].title }}\nLink: {{ $('Activity Itinerary').item.json.results[1].url }}\nDescription: {{ $('Activity Itinerary').item.json.results[1].content }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=#Overview\n\nYou are a creative travel email writer specializing in making vacation plans exciting. Your job is to output an HTML email with clickable links that looks visually appealing, like a digital travel brochure. You must output a subject and an emailBody in separate parameters.\n\n##Objective\n\nYou will receive information about a vacation plan. Break the email into 4 sections: Introduction, Flights, Resorts, and Activities.\n\n##Output Format\n\nThe email should be structured as HTML that will be sent through email.\n\nUse headers to separate sections.\n\nAdd a horizontal line <hr> to end each section.\n\nKeep the tone friendly, inspiring, and exciting.\n\n###Subject\n\nShould contain the travel dates and the arrival location.\n\nMake it catchy and exciting (e.g., “Your Adventure to Rome Awaits! | Sept 20–25”).\n\n###Introduction\n\nWarmly welcome the traveler.\n\nAdd one inspiring travel line to spark excitement.\n\nKeep it short and engaging.\n\nEnd this section with a <hr>.\n\n###Flights\n\nList the departure and return dates and locations.\n\nShow flight details (flight number, airline, departure time, duration if available).\n\nUse a clean bullet point or line-break format.\n\nEnd this section with a <hr>.\n\n###Resorts\n\nList each resort with a numbered format (1, 2, 3 …).\n\nThe resort name should be a clickable link.\n\nBelow each resort name, display an image in HTML format:\n\n<img src=\"{image url here}\" style=\"max-width:20%; height:auto;\">\n\n\nAdd a blank line after the image for spacing.\n\nEnd this section with a <hr>.\n\n###Activities\n\nList activities with clickable links as the activity names.\n\nAdd a fun, short description (1–2 lines) for each activity.\n\nUse bullet points or clean formatting.\n\nEnd this section with a <hr>.\n\n###Signoff\n\nEnd with a friendly closing line (e.g., “We can’t wait to make this trip unforgettable!”).\n\nSign off as: Agent Travel Team.\n\n##Important\n\nDo not output more than 1000 words.\n\nThe email should be visually clear, structured, and exciting."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        464,
+        256
+      ],
+      "id": "ec40c42f-adfd-4057-92ff-7b8a5304e31f",
+      "name": "Email Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"subject\": {\n      \"type\": \"string\",\n      \"description\": \"the email subject\"\n    },\n    \"emailBody\": {\n      \"type\": \"string\",\n      \"description\": \"the email body\"\n    }\n  },\n  \"required\": [\"subject\", \"emailBody\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        640,
+        448
+      ],
+      "id": "6da9fa3f-eb1c-4d3b-8577-555921346d1c",
+      "name": "Subject & Email"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Set Fields').item.json.email }}",
+        "subject": "={{ $json.output.subject }}",
+        "message": "={{ $json.output.emailBody }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        784,
+        256
+      ],
+      "id": "6c6aaddc-ad8d-4f02-80cd-013119f93f29",
+      "name": "Send Plan",
+      "webhookId": "78b7ab64-b7f6-46c0-86ce-277fa6a6a6a4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Po2Z1uRbvJofbPjv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fd838df2-da7c-4cb6-bef5-e7837d49fa26",
+              "name": "response",
+              "value": "=An email has been sent with the travel plan for: {{ $('Email Agent').item.json.output.subject }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        256
+      ],
+      "id": "409eab1a-eb84-497c-a409-7e76bebc7428",
+      "name": "Response"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        448
+      ],
+      "id": "74eb7a8b-5149-408f-8fac-ddd9208a41dc",
+      "name": "4o2",
+      "credentials": {
+        "openAiApi": {
+          "id": "ErYw6GpGKUDpQCWa",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google_hotels"
+            },
+            {
+              "name": "q",
+              "value": "={{ $('Set Fields').item.json.destination }}"
+            },
+            {
+              "name": "check_in_date",
+              "value": "={{ $('Airport Codes & Dates').item.json.output.departure }}"
+            },
+            {
+              "name": "check_out_date",
+              "value": "={{ $('Airport Codes & Dates').item.json.output.return }}"
+            },
+            {
+              "name": "adults",
+              "value": "={{ $('Set Fields').item.json.travelers }}"
+            },
+            {
+              "name": "sort_by",
+              "value": "8"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        112,
+        352
+      ],
+      "id": "497163f0-71e3-42a2-87c1-a5e6deed868c",
+      "name": "Resorts / Hotels",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "emyZc6Ka8Q66rFso",
+          "name": "Query Auth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"{{ $('Set Fields').item.json.activities }} in {{ $('Set Fields').item.json.destination }}\",\n  \"topic\": \"general\",\n  \"search_depth\": \"basic\",\n  \"max_results\": 3,\n  \"time_range\": null,\n  \"days\": 3,\n  \"include_answer\": true,\n  \"include_raw_content\": false,\n  \"include_images\": false,\n  \"include_image_descriptions\": false,\n  \"include_domains\": [],\n  \"exclude_domains\": []\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        112,
+        128
+      ],
+      "id": "0c90c35b-08fc-479c-b6ee-91a0ced79acf",
+      "name": "Activity Itinerary"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google_flights"
+            },
+            {
+              "name": "departure_id",
+              "value": "={{ $('Airport Codes & Dates').item.json.output.origin }}"
+            },
+            {
+              "name": "arrival_id",
+              "value": "={{ $('Airport Codes & Dates').item.json.output.destination }}"
+            },
+            {
+              "name": "outbound_date",
+              "value": "={{ $('Airport Codes & Dates').item.json.output.departure }}"
+            },
+            {
+              "name": "return_date",
+              "value": "={{ $('Airport Codes & Dates').item.json.output.return }}"
+            },
+            {
+              "name": "adults",
+              "value": "={{ $('Set Fields').item.json.travelers }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        112,
+        576
+      ],
+      "id": "3c775cae-a157-4ab5-9b37-bc7c5752b210",
+      "name": "Fetching Flights",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "emyZc6Ka8Q66rFso",
+          "name": "Query Auth account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "azicxd.app.n8n.cloud",
+            "user-agent": "Python/3.12 aiohttp/3.11.16",
+            "content-length": "210",
+            "accept": "*/*",
+            "accept-encoding": "gzip, br",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "34.67.146.145",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "US",
+            "cf-ray": "93fa8bad2292197-ORD",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "x-forwarded-for": "34.67.146.145, 172.71.255.116",
+            "x-forwarded-host": "azicxd.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-25-79cb8df8b5-qqknw",
+            "x-is-trusted": "yes",
+            "x-real-ip": "34.67.146.145"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "traveler": 1,
+            "origin": "IAD",
+            "destination": "Cincinnati, OH",
+            "departure_date": "2025-09-26",
+            "return_date": "2025-09-28",
+            "activities": "food, sightseeing",
+            "email": "dneelapu@umd.edu",
+            "name": "Dhanu",
+            "status": "Plan generated and emailed to user"
+          },
+          "webhookUrl": "https://payasam.app.n8n.cloud/webhook-test/travelplaner",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Fields": {
+      "main": [
+        [
+          {
+            "node": "Airport Codes & Dates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airport Codes & Dates": {
+      "main": [
+        [
+          {
+            "node": "Activity Itinerary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4o": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Airport Codes & Dates",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Locations & Dates": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Airport Codes & Dates",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subject & Email": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Plan": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4o2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resorts / Hotels": {
+      "main": [
+        [
+          {
+            "node": "Fetching Flights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Activity Itinerary": {
+      "main": [
+        [
+          {
+            "node": "Resorts / Hotels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetching Flights": {
+      "main": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5a8508e4-ab6f-42a2-bdf1-38b779a5b470",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f62e0351ba6be9c33395521258928f08d2377422140084ee3a8dbbd92e5443ec"
+  },
+  "id": "PRtF7yldpdX8Msyp",
+  "tags": []
+}
